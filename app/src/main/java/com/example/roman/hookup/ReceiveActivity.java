@@ -33,11 +33,10 @@ import java.util.regex.Pattern;
 import static android.widget.Toast.makeText;
 
 public class ReceiveActivity extends AppCompatActivity {
-
     private TextView fullNameText;
     private TextView numberText;
     private TextView faceText;
-    private TextView instaText;
+    private TextView instagramText;
 
     @Override
     protected void onPause() {
@@ -61,7 +60,7 @@ public class ReceiveActivity extends AppCompatActivity {
         fullNameText = (TextView) findViewById(R.id.fullNameEdit);
         numberText = (TextView) findViewById(R.id.phoneNumberEdit);
         faceText = (TextView) findViewById(R.id.facebookEdit);
-        instaText = (TextView) findViewById(R.id.instaEdit);
+        instagramText = (TextView) findViewById(R.id.instaEdit);
 
 
         Bundle bundle = getIntent().getExtras();
@@ -115,10 +114,10 @@ public class ReceiveActivity extends AppCompatActivity {
             }
         });
 
-        instaText.setOnClickListener(new View.OnClickListener() {
+        instagramText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String login = instaText.getText().toString();
+                String login = instagramText.getText().toString();
                 makeText(ReceiveActivity.this, R.string.Instagram_open, Toast.LENGTH_SHORT).show();
                 Uri uri = Uri.parse("http://instagram.com/_u/" + login);
                 Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
@@ -132,7 +131,7 @@ public class ReceiveActivity extends AppCompatActivity {
                 }
 
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("", instaText.getText().toString());
+                ClipData clip = ClipData.newPlainText("", instagramText.getText().toString());
                 clipboard.setPrimaryClip(clip);
             }
         });
@@ -143,7 +142,7 @@ public class ReceiveActivity extends AppCompatActivity {
         fullNameText = (TextView) findViewById(R.id.fullNameEdit);
         numberText = (TextView) findViewById(R.id.phoneNumberEdit);
         faceText = (TextView) findViewById(R.id.facebookEdit);
-        instaText = (TextView) findViewById(R.id.instaEdit);
+        instagramText = (TextView) findViewById(R.id.instaEdit);
 
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         File directory = cw.getExternalFilesDir("saveJsonFolder");
@@ -166,7 +165,7 @@ public class ReceiveActivity extends AppCompatActivity {
         String faceLogin = obj.getString("facebook_login");
         faceText.setText(faceLogin);
         String instaLogin = obj.getString("insta_login");
-        instaText.setText(instaLogin);
+        instagramText.setText(instaLogin);
 
 
         parsedData.put("full_name", firstName);
@@ -195,7 +194,7 @@ public class ReceiveActivity extends AppCompatActivity {
             fullNameText.setText(array[0].replaceAll("\\s+", ""));
             numberText.setText(array[1].replaceAll("\\s+", ""));
             faceText.setText(array[2].replaceAll("\\s+", ""));
-            instaText.setText(array[3].replaceAll("\\s+", ""));
+            instagramText.setText(array[3].replaceAll("\\s+", ""));
         } else {
             setTitle(R.string.receive_label3);
             Toast.makeText(ReceiveActivity.this, R.string.QR_error, Toast.LENGTH_SHORT).show();
@@ -212,7 +211,7 @@ public class ReceiveActivity extends AppCompatActivity {
         editor.putString(fullNameText.getId() + "", fullNameText.getText().toString());
         editor.putString(numberText.getId() + "", numberText.getText().toString());
         editor.putString(faceText.getId() + "", faceText.getText().toString());
-        editor.putString(instaText.getId() + "", instaText.getText().toString());
+        editor.putString(instagramText.getId() + "", instagramText.getText().toString());
         editor.commit();
         return 0;
     }
@@ -222,7 +221,7 @@ public class ReceiveActivity extends AppCompatActivity {
         fullNameText.setText(sharedPref.getString(fullNameText.getId() + "", ""));
         numberText.setText(sharedPref.getString(numberText.getId() + "", ""));
         faceText.setText(sharedPref.getString(faceText.getId() + "", ""));
-        instaText.setText(sharedPref.getString(instaText.getId() + "", ""));
+        instagramText.setText(sharedPref.getString(instagramText.getId() + "", ""));
     }
 }
 
