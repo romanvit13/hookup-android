@@ -57,10 +57,10 @@ public class ReceiveActivity extends AppCompatActivity {
         setTitle(R.string.receive_label);
 
 
-        fullNameText = (TextView) findViewById(R.id.fullNameEdit);
-        numberText = (TextView) findViewById(R.id.phoneNumberEdit);
-        faceText = (TextView) findViewById(R.id.facebookEdit);
-        instagramText = (TextView) findViewById(R.id.instaEdit);
+        fullNameText = findViewById(R.id.fullNameEdit);
+        numberText = findViewById(R.id.phoneNumberEdit);
+        faceText = findViewById(R.id.facebookEdit);
+        instagramText = findViewById(R.id.instaEdit);
 
 
         Bundle bundle = getIntent().getExtras();
@@ -72,8 +72,7 @@ public class ReceiveActivity extends AppCompatActivity {
             setTitle(R.string.receive_label1);
         }
 
-
-        Button closeButton = (Button) findViewById(R.id.closeButton);
+        Button closeButton = findViewById(R.id.closeButton);
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -203,7 +202,6 @@ public class ReceiveActivity extends AppCompatActivity {
             receivedText.setText(info);
         }
     }
-
 
     public int saveData() {
         SharedPreferences sharedPref = ReceiveActivity.this.getPreferences(Context.MODE_PRIVATE);

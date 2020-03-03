@@ -14,7 +14,7 @@ public class InfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        Button siteButton =  (Button) findViewById(R.id.button);
+        Button siteButton = findViewById(R.id.button);
         siteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -24,6 +24,4 @@ public class InfoActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }
