@@ -17,8 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.github.amlcurran.showcaseview.ShowcaseView;
-import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.journeyapps.barcodescanner.CaptureActivity;
 
 import org.json.JSONArray;
@@ -30,10 +28,10 @@ import java.io.FileWriter;
 import java.io.Writer;
 
 
-public class HomeActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
+
     private static final int PERMS_REQUEST_CODE = 123;
-    private EditText[] mEditTexts;
-    private ShowcaseView mTutorialView;
+    private EditText[] textViews;
 
     @Override
     public void onPause() {
@@ -50,37 +48,30 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_main);
 
-        initEditTexts();
-        initButtons();
-
-        /*Load saved data*/
-        loadData();
-        requestSavePermission();
-    }
-
-    private void initEditTexts() {
         /*List for Edit Texts*/
-        mEditTexts = new EditText[4];
+        textViews = new EditText[4];
 
         /*Initialize the list*/
-        mEditTexts[0] = (EditText) findViewById(R.id.fullNameEdit);
-        mEditTexts[1] = (EditText) findViewById(R.id.phoneNumberEdit);
-        mEditTexts[2] = (EditText) findViewById(R.id.facebookEdit);
-        mEditTexts[3] = (EditText) findViewById(R.id.instaEdit);
-    }
+        textViews[0] = (EditText) findViewById(R.id.fullNameEdit);
+        textViews[1] = (EditText) findViewById(R.id.phoneNumberEdit);
+        textViews[2] = (EditText) findViewById(R.id.facebookEdit);
+        textViews[3] = (EditText) findViewById(R.id.instaEdit);
 
-    private void initButtons() {
         /*Three functional buttons.*/
         final Button historyButton = (Button) findViewById(R.id.historyButton);
         final Button shareButton = (Button) findViewById(R.id.shareToActivityButton);
         final Button receiveButton = (Button) findViewById(R.id.receiveButton);
 
+        /*Load saved data*/
+        loadData();
+        requestSavePermission();
+
         historyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, ReceiveActivity.class);
+                Intent intent = new Intent(MainActivity.this, ReceiveActivity.class);
                 startActivity(intent);
             }
         });
@@ -90,11 +81,11 @@ public class HomeActivity extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent openShareActivity = new Intent(HomeActivity.this, ShareActivity.class);
-                openShareActivity.putExtra("full name", mEditTexts[0].getText().toString());
-                openShareActivity.putExtra("number", mEditTexts[1].getText().toString());
-                openShareActivity.putExtra("facebook", mEditTexts[2].getText().toString());
-                openShareActivity.putExtra("insta", mEditTexts[3].getText().toString());
+                Intent openShareActivity = new Intent(MainActivity.this, ShareActivity.class);
+                openShareActivity.putExtra("full name", textViews[0].getText().toString());
+                openShareActivity.putExtra("number", textViews[1].getText().toString());
+                openShareActivity.putExtra("facebook", textViews[2].getText().toString());
+                openShareActivity.putExtra("insta", textViews[3].getText().toString());
                 startActivity(openShareActivity);
             }
         });
@@ -103,7 +94,7 @@ public class HomeActivity extends AppCompatActivity {
         receiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isHasCameraPermission()) {
+                if (hasCameraPermission()) {
                     Intent intent = new Intent(getApplicationContext(), CaptureActivity.class);
                     intent.setAction("com.google.zxing.client.android.SCAN");
                     intent.putExtra("SAVE_HISTORY", false);
@@ -115,12 +106,8 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Method on QR scanning result.
-     * @param requestCode
-     * @param resultCode - if it is 'OK', method populates an intent
-     * @param intent - contains a QR code data in it
-     */
+
+    /*If QR scanner scanned then do.*/
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
@@ -130,7 +117,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(Result);
                 // Handle successful scan
             } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(HomeActivity.this, R.string.QR_error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.QR_error, Toast.LENGTH_SHORT).show();
                 // Handle cancel
             }
         }
@@ -148,7 +135,7 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_cart:
-                Intent startInfo = new Intent(HomeActivity.this, InfoActivity.class);
+                Intent startInfo = new Intent(MainActivity.this, InfoActivity.class);
                 startActivity(startInfo);
                 break;
         }
@@ -156,131 +143,28 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    public void saveData() {
-        SharedPreferences sharedPref = HomeActivity.this.getPreferences(Context.MODE_PRIVATE);
+    public int saveData() {
+        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        for (EditText mEditText : mEditTexts) {
-            if (
-                    !mEditText.getText().toString().equals("") &&
-                            !mEditText.getText().toString().equals("") &&
-                            !mEditText.getText().toString().equals("")
-            ) {
-                editor.putString(Integer.toString(mEditText.getId()), mEditText.getText().toString());
+        for (int i = 0; i < textViews.length; i++) {
+            if ((textViews[i].getText().toString() != "")
+                    && (textViews[i].getText().toString() != " ")
+                    && (textViews[i].getText().toString() != "  ")) {
+                editor.putString(textViews[i].getId() + "", textViews[i].getText().toString());
             }
         }
-        editor.apply();
+        editor.commit();
+        return 0;
     }
 
     private void loadData() {
-        SharedPreferences sharedPref = HomeActivity.this.getPreferences(Context.MODE_PRIVATE);
-        for (EditText mEditText : mEditTexts) {
-            String saved = sharedPref.getString(Integer.toString(mEditText.getId()), "");
-            if (!saved.equals("") && !saved.equals(" ") && !saved.equals("  ")) {
-                mEditText.setText(saved);
+        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+        for (int i = 0; i < textViews.length; i++) {
+            String saved = sharedPref.getString(textViews[i].getId() + "", "");
+            if (saved != "" && saved != " " && saved != "  ") {
+                textViews[i].setText(saved);
             }
         }
-    }
-
-    /*Check if device allows to use camera.*/
-    private boolean isHasCameraPermission() {
-        int res;
-        String permission = Manifest.permission.CAMERA;
-        res = checkCallingOrSelfPermission(permission);
-        return PackageManager.PERMISSION_GRANTED == res;
-    }
-
-    /*Request the save permission.*/
-    private void requestSavePermission() {
-        String[] permissions = new String[]{
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(permissions, PERMS_REQUEST_CODE);
-        }
-    }
-
-    /*Request the camera permission.*/
-    private void requestCameraPermission() {
-        String[] permissions = new String[]{
-                Manifest.permission.CAMERA};
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(permissions, PERMS_REQUEST_CODE);
-        }
-    }
-
-    private int firstRun() {
-        final String PREFS_NAME = "MyPrefsFile";
-        final String PREF_VERSION_CODE_KEY = "version_code";
-        final int DOESNT_EXIST = -1;
-
-        int result = 0;
-
-        int currentVersionCode = BuildConfig.VERSION_CODE;
-
-        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        int savedVersionCode = prefs.getInt(PREF_VERSION_CODE_KEY, DOESNT_EXIST);
-        if (currentVersionCode == savedVersionCode) {
-            result = 0;
-        } else if (savedVersionCode == DOESNT_EXIST) {
-            result = 1;
-        } else if (currentVersionCode > savedVersionCode) {
-            result = 1;
-        }
-        prefs.edit().putInt(PREF_VERSION_CODE_KEY, currentVersionCode).apply();
-        return result;
-    }
-
-    private void firstGuide(){
-        final ViewTarget target1 = new ViewTarget(R.id.fullNameEdit, this);
-        final ViewTarget target2 = new ViewTarget(R.id.phoneNumberEdit, this);
-        final ViewTarget target3 = new ViewTarget(R.id.facebookEdit, this);
-        final ViewTarget target4 = new ViewTarget(R.id.shareToActivityButton, this);
-        final ViewTarget target5 = new ViewTarget(R.id.receiveButton, this);
-
-
-        mTutorialView = new ShowcaseView.Builder(this)
-                .withMaterialShowcase()
-                .setTarget(target1)
-                .setContentTitle("Write here your name")
-                .setStyle(R.style.CustomShowcaseMaterial)
-                .build();
-
-        mTutorialView.overrideButtonClick(new View.OnClickListener() {
-            int count1 = 0;
-
-            @Override
-            public void onClick(View v) {
-                count1++;
-                switch (count1) {
-                    case 1:
-                        mTutorialView.setTarget(target2);
-                        mTutorialView.setContentTitle("Write here your phone number");
-                        mTutorialView.setButtonText("next");
-                        break;
-
-                    case 2:
-                        mTutorialView.setTarget(target3);
-                        mTutorialView.setContentTitle("Write here your login of facebook or instagram");
-                        mTutorialView.setButtonText("next");
-                        break;
-                    case 3:
-                        mTutorialView.setTarget(target4);
-                        mTutorialView.setContentTitle("Tap this button to share your contacts");
-                        mTutorialView.setButtonText("next");
-                        break;
-                    case 4:
-                        mTutorialView.setTarget(target5);
-                        mTutorialView.setContentTitle("Tap this button to get info from your friend");
-                        mTutorialView.setButtonText("next");
-                        break;
-                    case 5:
-                        mTutorialView.hide();
-                        break;
-                }
-            }
-        });
     }
 
     /*Will use it later.*/
@@ -305,6 +189,7 @@ public class HomeActivity extends AppCompatActivity {
 
     /*Will use it later.*/
     private void saveJson() {
+
         try {
             ContextWrapper cw = new ContextWrapper(getApplicationContext());
             File directory = cw.getExternalFilesDir("saveJsonFolder");
@@ -319,6 +204,114 @@ public class HomeActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
+
+    /*Check if device allows to use camera.*/
+    private boolean hasCameraPermission() {
+        int res;
+        String permission = Manifest.permission.CAMERA;
+        res = checkCallingOrSelfPermission(permission);
+        if (PackageManager.PERMISSION_GRANTED == res) {
+            return true;
+        } else
+            return false;
+    }
+
+    /*Request the save permission.*/
+    private void requestSavePermission() {
+        String[] permissions = new String[]{
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(permissions, PERMS_REQUEST_CODE);
+        }
+    }
+
+    /*Request the camera permission.*/
+    private void requestCameraPermission() {
+        String[] permissions = new String[]{
+                Manifest.permission.CAMERA};
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(permissions, PERMS_REQUEST_CODE);
+        }
+    }
+
+    private int firstRun() {
+
+        final String PREFS_NAME = "MyPrefsFile";
+        final String PREF_VERSION_CODE_KEY = "version_code";
+        final int DOESNT_EXIST = -1;
+
+        int result = 0;
+
+        int currentVersionCode = BuildConfig.VERSION_CODE;
+
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        int savedVersionCode = prefs.getInt(PREF_VERSION_CODE_KEY, DOESNT_EXIST);
+        if (currentVersionCode == savedVersionCode) {
+            result = 0;
+        } else if (savedVersionCode == DOESNT_EXIST) {
+            result = 1;
+        } else if (currentVersionCode > savedVersionCode) {
+            result = 1;
+        }
+        prefs.edit().putInt(PREF_VERSION_CODE_KEY, currentVersionCode).apply();
+        return result;
+    }
+
+    /*
+    private void firstGuide(){
+        final ViewTarget target1 = new ViewTarget(R.id.fullNameEdit, this);
+        final ViewTarget target2 = new ViewTarget(R.id.phoneNumberEdit, this);
+        final ViewTarget target3 = new ViewTarget(R.id.facebookEdit, this);
+        final ViewTarget target4 = new ViewTarget(R.id.shareToActivityButton, this);
+        final ViewTarget target5 = new ViewTarget(R.id.receiveButton, this);
+
+
+        sv = new ShowcaseView.Builder(this)
+                .withMaterialShowcase()
+                .setTarget(target1)
+                .setContentTitle("Write here your name")
+                .setStyle(R.style.CustomShowcaseMaterial)
+                .build();
+
+        sv.overrideButtonClick(new View.OnClickListener() {
+            int count1 = 0;
+
+            @Override
+            public void onClick(View v) {
+                count1++;
+                switch (count1) {
+                    case 1:
+                        sv.setTarget(target2);
+                        sv.setContentTitle("Write here your phone number");
+                        sv.setButtonText("next");
+                        break;
+
+                    case 2:
+                        sv.setTarget(target3);
+                        sv.setContentTitle("Write here your login of facebook or instagram");
+                        sv.setButtonText("next");
+                        break;
+                    case 3:
+                        sv.setTarget(target4);
+                        sv.setContentTitle("Tap this button to share your contacts");
+                        sv.setButtonText("next");
+                        break;
+                    case 4:
+                        sv.setTarget(target5);
+                        sv.setContentTitle("Tap this button to get info from your friend");
+                        sv.setButtonText("next");
+                        break;
+                    case 5:
+                        sv.hide();
+                        break;
+                }
+            }
+        });
+    }*/
+
 }
 
 

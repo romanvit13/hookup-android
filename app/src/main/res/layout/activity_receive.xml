@@ -280,7 +280,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_weight="0"
-        android:background="@color/violet"
+        android:background="@color/semi_black"
         android:text="@string/close_button_text"
         android:textColor="@color/white" />
 

@@ -3,12 +3,12 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/violet</item>
-        <item name="colorPrimaryDark">@color/violet</item>
-        <item name="colorAccent">@color/violet</item>
+        <item name="colorPrimary">@color/semi_black</item>
+        <item name="colorPrimaryDark">@color/semi_black</item>
+        <item name="colorAccent">@color/semi_black</item>
     </style>
 
-    <!-- *** SHOWCASE *** -->
+    <!-- *** SHOWCASE ***
     <style name="CustomShowcaseMaterial" parent="ShowcaseView">
         <item name="sv_backgroundColor">@color/transparent_black</item>
         <item name="sv_showcaseColor">@color/colorGrey</item>
@@ -17,6 +17,7 @@
         <item name="sv_detailTextAppearance">@style/CustomTextMaterial</item>
     </style>
 
+
     <style name="CustomTitleMaterial" parent="TextAppearance.ShowcaseView.Title.Light">
         <item name="android:textColor">@color/white</item>
     </style>
@@ -24,5 +25,6 @@
     <style name="CustomTextMaterial" parent="TextAppearance.ShowcaseView.Detail.Light">
         <item name="android:textColor">@color/white</item>
     </style>
+    -->
 
 </resources>

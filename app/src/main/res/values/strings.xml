@@ -23,13 +23,13 @@
     <string name="receive_label3">Wrong format of QR-code.</string>
 
     <string name="info">Info</string>
-    <string name="purpose_label">Purpose of the program.</string>
+    <string name="purpose_label">Purpose of the program</string>
     <string name="purpose_text">This program is created for simple way to make new friends in social networks.\n It is based on QR codes.</string>
-    <string name="about_label">About us.</string>
+    <string name="about_label">About us</string>
     <string name="about_text">We are students from Lviv Polytechnic University, \'Internet of Things\' faculty. </string>
-    <string name="contacts_label">Contacts.</string>
+    <string name="contacts_label">Contacts</string>
     <string name="contacts_text" translatable="false"> kr.ihor.wow@gmail.com \n romanvit13@gmail.com</string>
-    <string name="web_label">Website.</string>
+    <string name="web_label">Website</string>
 
     <string name="button_text">Go to site</string>
     <string name="close_button_text">close</string>

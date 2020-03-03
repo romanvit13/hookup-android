@@ -1,8 +1,11 @@
 *.iml
+/app/debug
+/app/release
 /.gradle
 /local.properties
 /.idea
-.DS_Store
 /build
 /captures
+/gradle/wrapper
 .externalNativeBuild
+.DS_Store
