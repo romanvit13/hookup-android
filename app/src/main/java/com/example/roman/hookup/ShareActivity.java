@@ -27,7 +27,6 @@ public class ShareActivity extends AppCompatActivity {
         generateQR(QRContent);
     }
 
-
     /*Generate QR code method.*/
     private void generateQR(String content) {
         QRCodeWriter writer = new QRCodeWriter();

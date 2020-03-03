@@ -143,6 +143,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/xz1"
                 android:text="@string/button_text"
+                android:enabled="false"
                  />
         </LinearLayout>
         </LinearLayout>
