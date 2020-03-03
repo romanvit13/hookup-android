@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:weightSum="100"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/infoText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="0.03"
+        android:textAllCaps="true"
+        android:text="@string/main_info"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="1">
+
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_white"
+            android:weightSum="100">
+
+            <ImageView
+                android:id="@+id/user"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:contentDescription="contact"
+                android:padding="10dp"
+                app:srcCompat="@drawable/user" />
+
+            <EditText
+                android:id="@+id/fullNameEdit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="70"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center"
+                android:hint="@string/name_label"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:theme="@style/AppTheme" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_white"
+            android:weightSum="100"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:id="@+id/phoneImage"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:contentDescription="contact"
+                android:padding="10dp"
+                app:srcCompat="@drawable/ic_phone_icon" />
+
+            <EditText
+                android:id="@+id/phoneNumberEdit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="70"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="@string/number_label"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:theme="@style/AppTheme" />
+        </LinearLayout>
+    </GridLayout>
+
+    <TextView
+        android:id="@+id/socialNetworksText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textAllCaps="true"
+        android:text="@string/social"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:columnCount="1"
+        android:paddingBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_white"
+            android:weightSum="100"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:id="@+id/instaImage"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:contentDescription="contact"
+                android:padding="10dp"
+                app:srcCompat="@drawable/insta_logo_small" />
+
+            <EditText
+                android:id="@+id/instaEdit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="70"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="@string/insta_label"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:theme="@style/AppTheme" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_white"
+            android:weightSum="100">
+
+            <ImageView
+                android:id="@+id/facebookImage"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:contentDescription="contact"
+                android:padding="10dp"
+                app:srcCompat="@drawable/fb_logo_small" />
+
+            <EditText
+                android:id="@+id/facebookEdit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="70"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="@string/face_label"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:theme="@style/AppTheme" />
+        </LinearLayout>
+    </GridLayout>
+</LinearLayout>

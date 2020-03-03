@@ -29,19 +29,12 @@ import java.io.Writer;
 
 
 public class MainActivity extends AppCompatActivity {
-
     private static final int PERMS_REQUEST_CODE = 123;
     private EditText[] textViews;
 
     @Override
     public void onPause() {
         super.onPause();
-        saveData();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
         saveData();
     }
 
@@ -66,13 +59,11 @@ public class MainActivity extends AppCompatActivity {
 
         /*Load saved data*/
         loadData();
-        requestSavePermission();
 
         historyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ReceiveActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(MainActivity.this, ReceiveActivity.class));
             }
         });
 
@@ -80,12 +71,7 @@ public class MainActivity extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent openShareActivity = new Intent(MainActivity.this, ShareActivity.class);
-                openShareActivity.putExtra("full name", textViews[0].getText().toString());
-                openShareActivity.putExtra("number", textViews[1].getText().toString());
-                openShareActivity.putExtra("facebook", textViews[2].getText().toString());
-                openShareActivity.putExtra("insta", textViews[3].getText().toString());
-                startActivity(openShareActivity);
+                launchShareActivity();
             }
         });
 
@@ -94,10 +80,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (hasCameraPermission()) {
-                    Intent intent = new Intent(getApplicationContext(), CaptureActivity.class);
-                    intent.setAction("com.google.zxing.client.android.SCAN");
-                    intent.putExtra("SAVE_HISTORY", false);
-                    startActivityForResult(intent, 0);
+                    launchCodeScannerActivity();
                 } else {
                     requestCameraPermission();
                 }
@@ -106,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*If QR scanner scanned then do.*/
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
@@ -121,6 +105,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void launchShareActivity() {
+        Intent openShareActivity = new Intent(MainActivity.this, ShareActivity.class);
+        openShareActivity.putExtra("full name", textViews[0].getText().toString());
+        openShareActivity.putExtra("number", textViews[1].getText().toString());
+        openShareActivity.putExtra("facebook", textViews[2].getText().toString());
+        openShareActivity.putExtra("insta", textViews[3].getText().toString());
+        startActivity(openShareActivity);
+    }
+
+    private void launchCodeScannerActivity() {
+        Intent intent = new Intent(getApplicationContext(), CaptureActivity.class);
+        intent.setAction("com.google.zxing.client.android.SCAN");
+        intent.putExtra("SAVE_HISTORY", false);
+        startActivityForResult(intent, 0);
+    }
+
     /*Create menu with buttons on top.*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_cart:
+            case R.id.action_info:
                 Intent startInfo = new Intent(MainActivity.this, InfoActivity.class);
                 startActivity(startInfo);
                 break;
@@ -140,65 +140,28 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public int saveData() {
+    public void saveData() {
         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        for (int i = 0; i < textViews.length; i++) {
-            if ((textViews[i].getText().toString() != "")
-                    && (textViews[i].getText().toString() != " ")
-                    && (textViews[i].getText().toString() != "  ")) {
-                editor.putString(textViews[i].getId() + "", textViews[i].getText().toString());
+        for (EditText textView : textViews) {
+            if ((!textView.getText().toString().equals(""))
+                    && (!textView.getText().toString().equals(" "))
+                    && (!textView.getText().toString().equals("  "))) {
+                editor.putString(textView.getId() + "", textView.getText().toString());
             }
         }
-        editor.commit();
-        return 0;
+
+        editor.apply();
     }
 
     private void loadData() {
         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
-        for (int i = 0; i < textViews.length; i++) {
-            String saved = sharedPref.getString(textViews[i].getId() + "", "");
-            if (saved != "" && saved != " " && saved != "  ") {
-                textViews[i].setText(saved);
+        for (EditText textView : textViews) {
+            String saved = sharedPref.getString(textView.getId() + "", "");
+            assert saved != null;
+            if (!saved.equals("") && !saved.equals(" ") && !saved.equals("  ")) {
+                textView.setText(saved);
             }
-        }
-    }
-
-    /*Will use it later.*/
-    public JSONArray makeJSON() {
-        JSONArray jArr = new JSONArray();
-        JSONObject jObj = new JSONObject();
-        try {
-
-            jObj.put("full_name", ((EditText) findViewById(R.id.fullNameEdit)).getText().toString());
-            jObj.put("number", ((EditText) findViewById(R.id.phoneNumberEdit)).getText().toString());
-            jObj.put("facebook_login", ((EditText) findViewById(R.id.facebookEdit)).getText().toString());
-            jObj.put("insta_login", ((EditText) findViewById(R.id.instaEdit)).getText().toString());
-
-            jArr.put(jObj);
-
-        } catch (Exception e) {
-            System.out.println("Error:" + e);
-        }
-
-        return jArr;
-    }
-
-    /*Will use it later.*/
-    private void saveJson() {
-
-        try {
-            ContextWrapper cw = new ContextWrapper(getApplicationContext());
-            File directory = cw.getExternalFilesDir("saveJsonFolder");
-            Writer output = null;
-            File file = new File(directory.toString(), "save.json");
-            output = new BufferedWriter(new FileWriter(file));
-            output.write(makeJSON().toString());
-            output.close();
-            Toast.makeText(getApplicationContext(), "Composition saved", Toast.LENGTH_LONG).show();
-
-        } catch (Exception e) {
-            Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -207,53 +170,15 @@ public class MainActivity extends AppCompatActivity {
         int res;
         String permission = Manifest.permission.CAMERA;
         res = checkCallingOrSelfPermission(permission);
-        if (PackageManager.PERMISSION_GRANTED == res) {
-            return true;
-        } else
-            return false;
-    }
-
-    /*Request the save permission.*/
-    private void requestSavePermission() {
-        String[] permissions = new String[]{
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(permissions, PERMS_REQUEST_CODE);
-        }
+        return PackageManager.PERMISSION_GRANTED == res;
     }
 
     /*Request the camera permission.*/
     private void requestCameraPermission() {
-        String[] permissions = new String[]{
-                Manifest.permission.CAMERA};
-
+        String[] permissions = new String[]{Manifest.permission.CAMERA};
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(permissions, PERMS_REQUEST_CODE);
         }
-    }
-
-    private int firstRun() {
-        final String PREFS_NAME = "MyPrefsFile";
-        final String PREF_VERSION_CODE_KEY = "version_code";
-        final int DOESNT_EXIST = -1;
-
-        int result = 0;
-
-        int currentVersionCode = BuildConfig.VERSION_CODE;
-
-        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        int savedVersionCode = prefs.getInt(PREF_VERSION_CODE_KEY, DOESNT_EXIST);
-        if (currentVersionCode == savedVersionCode) {
-            result = 0;
-        } else if (savedVersionCode == DOESNT_EXIST) {
-            result = 1;
-        } else if (currentVersionCode > savedVersionCode) {
-            result = 1;
-        }
-        prefs.edit().putInt(PREF_VERSION_CODE_KEY, currentVersionCode).apply();
-        return result;
     }
 }
 

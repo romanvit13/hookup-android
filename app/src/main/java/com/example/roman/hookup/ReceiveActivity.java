@@ -45,12 +45,6 @@ public class ReceiveActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        saveData();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receive);
@@ -134,47 +128,7 @@ public class ReceiveActivity extends AppCompatActivity {
                 clipboard.setPrimaryClip(clip);
             }
         });
-
     }
-
-    private HashMap<String, String> readJson() throws IOException, JSONException {
-        fullNameText = (TextView) findViewById(R.id.fullNameEdit);
-        numberText = (TextView) findViewById(R.id.phoneNumberEdit);
-        faceText = (TextView) findViewById(R.id.facebookEdit);
-        instagramText = (TextView) findViewById(R.id.instaEdit);
-
-        ContextWrapper cw = new ContextWrapper(getApplicationContext());
-        File directory = cw.getExternalFilesDir("saveJsonFolder");
-        File jsonFile = new File(directory.toString(), "save.json");
-        FileInputStream stream = new FileInputStream(jsonFile);
-        String jsonStr = null;
-        FileChannel fc = stream.getChannel();
-        MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
-        jsonStr = Charset.defaultCharset().decode(bb).toString();
-        JSONArray array = new JSONArray(jsonStr);
-
-        HashMap<String, String> parsedData = new HashMap<>();
-
-        JSONObject obj = array.getJSONObject(0);
-
-        String firstName = obj.getString("full_name");
-        fullNameText.setText(firstName);
-        String number = obj.getString("number");
-        numberText.setText(number);
-        String faceLogin = obj.getString("facebook_login");
-        faceText.setText(faceLogin);
-        String instaLogin = obj.getString("insta_login");
-        instagramText.setText(instaLogin);
-
-
-        parsedData.put("full_name", firstName);
-        parsedData.put("number", number);
-        parsedData.put("facebook_login", faceLogin);
-        parsedData.put("insta_login", instaLogin);
-
-        return parsedData;
-    }
-
 
     public void parse(String info) {
         String[] array = new String[5];
@@ -203,15 +157,14 @@ public class ReceiveActivity extends AppCompatActivity {
         }
     }
 
-    public int saveData() {
+    public void saveData() {
         SharedPreferences sharedPref = ReceiveActivity.this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(fullNameText.getId() + "", fullNameText.getText().toString());
         editor.putString(numberText.getId() + "", numberText.getText().toString());
         editor.putString(faceText.getId() + "", faceText.getText().toString());
         editor.putString(instagramText.getId() + "", instagramText.getText().toString());
-        editor.commit();
-        return 0;
+        editor.apply();
     }
 
     private void loadData() {

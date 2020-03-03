@@ -4,7 +4,6 @@
     <string name="Facebook_open">Открывается Facebook.</string>
     <string name="Instagram_open">Открывается Instagram.</string>
     <string name="QR_error">Не просканировано.</string>
-    <string name="VK_open">Открывается Вконтакте.</string>
     <string name="about_label">Про нас.</string>
     <string name="about_text">Мы студенты университета Львовская политехника, специальность \"Интернет вещей\".</string>
     <string name="button_text">К сайту</string>
@@ -18,17 +17,14 @@
     <string name="insta_label">Логин Instagram</string>
     <string name="main_info">Основная информация</string>
     <string name="name_label">Полное имя</string>
-    <string name="number_hint">(812) 555-12-34</string>
     <string name="number_label">Номер телефона</string>
     <string name="purpose_label">Цель программы</string>
     <string name="purpose_text">Программа создана для простого способа добавления друзей в социальных сетях.</string>
     <string name="receive_label">Полученая информация</string>
     <string name="receive_label1">Последнее знакомство</string>
     <string name="receive_label3">Неправильный формат QR-кода.</string>
-    <string name="save_button">Сохранить</string>
     <string name="share_activity_text">Просканируйте QR код.</string>
     <string name="share_button">Поделиться</string>
     <string name="social">Социальные сети</string>
-    <string name="vk_label">Логин Вконтакте.</string>
     <string name="web_label">Наш сайт.</string>
 </resources>

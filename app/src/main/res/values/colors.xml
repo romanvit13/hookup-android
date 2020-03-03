@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#ffffff</color>
-    <color name="grey">#eeeeee</color>
+    <color name="grey">#f4f4f4</color>
     <color name="black">#000000</color>
     <color name="semi_black">#212121</color>
     <color name="orange">#FFA000</color>
-
     <color name="colorGrey">#9E9E9E</color>
     <color name="transparent_black">#E61C1C1C</color>
 </resources>
