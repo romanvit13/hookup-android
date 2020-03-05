@@ -12,7 +12,8 @@
     <string name="share_button">Share</string>
     <string name="get_button">Get info</string>
 
-    <string name="share_activity_text">scan this code to retrieve \n the information</string>
+    <string name="share_activity_title">Visit card</string>
+    <string name="share_activity_text">show this code to share your information</string>
 
     <string name="receive_label">Received info</string>
     <string name="receive_label1">Last friend</string>
@@ -25,14 +26,12 @@
     <string name="about_text">We are students from Lviv Polytechnic University, \'Internet of Things\' faculty. </string>
     <string name="contacts_label">Contacts</string>
     <string name="contacts_text" translatable="false">romanvit13@gmail.com</string>
-    <string name="web_label">Website</string>
 
-    <string name="button_text">Go to site</string>
     <string name="close_button_text">close</string>
 
     <string name="data_saved">Your data was saved!</string>
     <string name="QR_error">Info was not scanned.</string>
 
-    <string name="Facebook_open">Opening Facebook app.</string>
-    <string name="Instagram_open">Opening Instagram app.</string>
+    <string name="Facebook_open">Opening Facebook app</string>
+    <string name="Instagram_open">Opening Instagram app</string>
 </resources>

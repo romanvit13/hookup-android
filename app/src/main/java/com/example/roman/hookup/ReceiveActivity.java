@@ -4,29 +4,17 @@ import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.charset.Charset;
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,19 +36,13 @@ public class ReceiveActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receive);
-        setTitle(R.string.receive_label);
-
-
-        fullNameText = findViewById(R.id.fullNameEdit);
-        numberText = findViewById(R.id.phoneNumberEdit);
-        faceText = findViewById(R.id.facebookEdit);
-        instagramText = findViewById(R.id.instaEdit);
-
+        initEditTexts();
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String info = bundle.getString("string");
             parse(info);
+            setTitle(R.string.receive_label);
         } else {
             loadData();
             setTitle(R.string.receive_label1);
@@ -83,7 +65,8 @@ public class ReceiveActivity extends AppCompatActivity {
                 startActivity(intent);
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("", numberText.getText().toString());
-                clipboard.setPrimaryClip(clip);
+                if (clipboard != null)
+                    clipboard.setPrimaryClip(clip);
             }
 
         });
@@ -103,7 +86,8 @@ public class ReceiveActivity extends AppCompatActivity {
 
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("", login);
-                clipboard.setPrimaryClip(clip);
+                if (clipboard != null)
+                    clipboard.setPrimaryClip(clip);
             }
         });
 
@@ -125,15 +109,16 @@ public class ReceiveActivity extends AppCompatActivity {
 
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("", instagramText.getText().toString());
-                clipboard.setPrimaryClip(clip);
+                if (clipboard != null)
+                    clipboard.setPrimaryClip(clip);
             }
         });
     }
 
     public void parse(String info) {
-        String[] array = new String[5];
+        String[] array = new String[4];
         int i = 0;
-        Pattern p = Pattern.compile("\\:(.*?)\\;");
+        Pattern p = Pattern.compile(":(.*?);");
         Matcher m = p.matcher(info);
 
         while (m.find()) {
@@ -152,12 +137,26 @@ public class ReceiveActivity extends AppCompatActivity {
             setTitle(R.string.receive_label3);
             Toast.makeText(ReceiveActivity.this, R.string.QR_error, Toast.LENGTH_SHORT).show();
             setContentView(R.layout.activity_receive_error);
-            EditText receivedText = (EditText) findViewById(R.id.receivedText);
+            EditText receivedText = findViewById(R.id.receivedText);
             receivedText.setText(info);
         }
     }
 
-    public void saveData() {
+    private void initEditTexts() {
+        fullNameText = findViewById(R.id.fullNameEdit);
+        fullNameText.setBackground(null);
+        numberText = findViewById(R.id.phoneNumberEdit);
+        numberText.setBackground(null);
+        numberText.setFocusable(false);
+        faceText = findViewById(R.id.facebookEdit);
+        faceText.setBackground(null);
+        faceText.setFocusable(false);
+        instagramText = findViewById(R.id.instaEdit);
+        instagramText.setBackground(null);
+        instagramText.setFocusable(false);
+    }
+
+    private void saveData() {
         SharedPreferences sharedPref = ReceiveActivity.this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(fullNameText.getId() + "", fullNameText.getText().toString());

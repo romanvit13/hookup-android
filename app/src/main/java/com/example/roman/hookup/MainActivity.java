@@ -2,13 +2,12 @@ package com.example.roman.hookup;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,15 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.journeyapps.barcodescanner.CaptureActivity;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.Writer;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -88,20 +80,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /*If QR scanner scanned then do.*/
+    /* If QR scanner scanned then do. */
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == 0) {
-            if (resultCode == RESULT_OK) {
-                String contents = intent.getStringExtra("SCAN_RESULT");
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            if(result.getContents() == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                 Intent Result = new Intent(getApplicationContext(), ReceiveActivity.class);
-                Result.putExtra("string", contents);
+                Result.putExtra("string", result.getContents());
                 startActivity(Result);
-                // Handle successful scan
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(MainActivity.this, R.string.QR_error, Toast.LENGTH_SHORT).show();
-                // Handle cancel
             }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -115,10 +108,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void launchCodeScannerActivity() {
-        Intent intent = new Intent(getApplicationContext(), CaptureActivity.class);
-        intent.setAction("com.google.zxing.client.android.SCAN");
-        intent.putExtra("SAVE_HISTORY", false);
-        startActivityForResult(intent, 0);
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setOrientationLocked(false);
+        integrator.initiateScan();
     }
 
     /*Create menu with buttons on top.*/
@@ -131,12 +123,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_info:
-                Intent startInfo = new Intent(MainActivity.this, InfoActivity.class);
-                startActivity(startInfo);
-                break;
+        if (item.getItemId() == R.id.action_info) {
+            Intent startInfo = new Intent(MainActivity.this, InfoActivity.class);
+            startActivity(startInfo);
         }
+
         return true;
     }
 
@@ -158,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
         for (EditText textView : textViews) {
             String saved = sharedPref.getString(textView.getId() + "", "");
-            assert saved != null;
             if (!saved.equals("") && !saved.equals(" ") && !saved.equals("  ")) {
                 textView.setText(saved);
             }

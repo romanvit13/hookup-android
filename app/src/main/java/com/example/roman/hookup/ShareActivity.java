@@ -3,9 +3,11 @@ package com.example.roman.hookup;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -18,6 +20,7 @@ public class ShareActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share);
+        setTitle(getResources().getString(R.string.share_activity_title));
 
         Bundle bundle = getIntent().getExtras();
         if (bundle == null) {
@@ -25,12 +28,14 @@ public class ShareActivity extends AppCompatActivity {
             return;
         }
 
+        final TextView userFullNameTv = findViewById(R.id.user_full_name);
+        userFullNameTv.setText(bundle.getString("full name"));
+
         String userInfo =
                 " Full name: " + bundle.getString("full name") + ";\n"
                 + " Phone number: " + bundle.getString("number") + ";\n"
                 + " Facebook login: " + bundle.getString("facebook") + ";\n"
-                + " Instagram login: " + bundle.getString("insta") + ";\n"
-                + " VK login: " + bundle.getString("vk") + ";";
+                + " Instagram login: " + bundle.getString("insta") + ";";
 
         displayQrCode(userInfo);
     }
