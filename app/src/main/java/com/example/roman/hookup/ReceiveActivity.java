@@ -40,7 +40,7 @@ public class ReceiveActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            String info = bundle.getString("string");
+            String info = bundle.getString(ShareActivity.USER_INFO);
             parse(info);
             setTitle(R.string.receive_label);
         } else {
