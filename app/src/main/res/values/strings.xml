@@ -8,9 +8,11 @@
 
     <string name="social">Social networks</string>
 
-    <string name="history_button">History</string>
-    <string name="share_button">Share</string>
-    <string name="get_button">Get info</string>
+    <string name="edit_button">Edit card</string>
+    <string name="my_info_button">My info</string>
+    <string name="history_button">Last friend</string>
+    <string name="share_button">Share card</string>
+    <string name="get_button">Get card</string>
 
     <string name="share_activity_title">Visit card</string>
     <string name="share_activity_text">show this code to share your information</string>
@@ -34,4 +36,7 @@
 
     <string name="Facebook_open">Opening Facebook app</string>
     <string name="Instagram_open">Opening Instagram app</string>
+    <string name="title_instant" translatable="false">Hookup Instant</string>
+    <string name="your_card">your visit card</string>
+    <string name="save_changesh">save changes</string>
 </resources>

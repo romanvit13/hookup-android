@@ -1,41 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.roman.hookup">
+    package="com.vit.roman.hookup">
+
+    <dist:module dist:instant="true" />
+
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:name="com.vit.roman.hookup.common.App"
         android:allowBackup="true"
-        android:label="@string/app_name"
+        android:fullBackupContent="@xml/backup_descriptor"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:hardwareAccelerated="true">
+        android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.example.roman.hookup.MainActivity"
+            android:name="com.vit.roman.hookup.activity.ShareActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="vit-hookup.firebaseapp.com" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="http"
+                    android:host="vit-hookup.firebaseapp.com" />
+            </intent-filter>
         </activity>
 
-        <activity android:name="com.example.roman.hookup.ShareActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity android:name="com.example.roman.hookup.InfoActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity android:name="com.example.roman.hookup.ReceiveActivity"
+        <activity
+            android:name="com.vit.roman.hookup.activity.UserCardActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name="com.vit.roman.hookup.activity.AppInfoActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name="com.vit.roman.hookup.activity.ReceiveActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"

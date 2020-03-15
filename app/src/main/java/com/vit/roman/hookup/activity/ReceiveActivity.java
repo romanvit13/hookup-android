@@ -1,4 +1,4 @@
-package com.example.roman.hookup;
+package com.vit.roman.hookup.activity;
 
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vit.roman.hookup.R;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,6 +31,7 @@ public class ReceiveActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
         saveData();
     }
 
@@ -40,7 +43,7 @@ public class ReceiveActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            String info = bundle.getString("string");
+            String info = bundle.getString(ShareActivity.USER_INFO);
             parse(info);
             setTitle(R.string.receive_label);
         } else {
