@@ -26,4 +26,8 @@
     <string name="social">Социальные сети</string>
     <string name="share_activity_title">Визитка</string>
     <string name="share_activity_text">покажите код для передачи вашей информации</string>
+    <string name="edit_button">Изменить карточку</string>
+    <string name="my_info_button">Моя карточка</string>
+    <string name="your_card">ваша карточка</string>
+    <string name="save_changesh">сохранить изменения</string>
 </resources>
