@@ -1,5 +1,6 @@
-package com.example.roman.hookup;
+package com.vit.roman.hookup.common;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -20,13 +21,13 @@ public class Card {
         mFields.remove(field);
     }
 
-    @Nullable
+    @NonNull
     public Field getField(FieldType fieldType) {
         for (Field field : mFields) {
             if (field.getFieldType() == fieldType)
                 return field;
         }
 
-        return null;
+        return new Field(FieldType.empty, "");
     }
 }

@@ -26,4 +26,8 @@
     <string name="history_button">Історія</string>
     <string name="receive_label1">Останнє знайомство</string>
     <string name="share_activity_title">Візитна картка</string>
+    <string name="edit_button">Змінити картку</string>
+    <string name="my_info_button">Моя картка</string>
+    <string name="your_card">ваша картка</string>
+    <string name="save_changesh">зберегти зміни</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.roman.hookup;
+package com.vit.roman.hookup.common;
 
 public class Field {
     private FieldType mFieldType;

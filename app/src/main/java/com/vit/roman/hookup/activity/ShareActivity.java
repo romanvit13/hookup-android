@@ -1,9 +1,7 @@
-package com.example.roman.hookup;
+package com.vit.roman.hookup.activity;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -18,8 +16,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -27,6 +25,11 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.vit.roman.hookup.R;
+import com.vit.roman.hookup.common.Card;
+import com.vit.roman.hookup.common.Field;
+import com.vit.roman.hookup.common.FieldType;
+import com.vit.roman.hookup.common.CardsManager;
 
 
 public class ShareActivity extends AppCompatActivity {
@@ -34,46 +37,17 @@ public class ShareActivity extends AppCompatActivity {
     private static final int CAMERA_PERMISSION = 13;
 
     @Override
-    public void onPause() {
-        super.onPause();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_share);
+        initButtons();
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected void onResume() {
+        super.onResume();
 
-        /*Three functional buttons.*/
-        final Button historyButton = findViewById(R.id.historyButton);
-        final Button shareButton = findViewById(R.id.shareToActivityButton);
-        final Button receiveButton = findViewById(R.id.receiveButton);
-
-        /*Start share activity and pass some info to it.*/
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        /*Start activity QR scanner.*/
-        receiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (hasCameraPermission()) {
-                    launchCodeScannerActivity();
-                } else {
-                    requestCameraPermission();
-                }
-            }
-        });
-
-        historyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ShareActivity.this, ReceiveActivity.class));
-            }
-        });
+        loadData();
     }
 
     /* If QR scanner scanned then do */
@@ -108,7 +82,7 @@ public class ShareActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_info) {
-            Intent startInfo = new Intent(ShareActivity.this, InfoActivity.class);
+            Intent startInfo = new Intent(ShareActivity.this, AppInfoActivity.class);
             startActivity(startInfo);
         }
 
@@ -158,6 +132,61 @@ public class ShareActivity extends AppCompatActivity {
                 launchCodeScannerActivity();
             }
         }
+    }
+
+    private void initButtons() {
+        /*Three functional buttons.*/
+        final Button historyButton = findViewById(R.id.historyButton);
+        final Button receiveButton = findViewById(R.id.receiveButton);
+        final Button editUserInfoButton = findViewById(R.id.edit_button);
+
+        /*Start activity QR scanner.*/
+        receiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (hasCameraPermission()) {
+                    launchCodeScannerActivity();
+                } else {
+                    requestCameraPermission();
+                }
+            }
+        });
+
+        historyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ShareActivity.this, ReceiveActivity.class));
+            }
+        });
+
+        editUserInfoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShareActivity.this, UserCardActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void loadData() {
+        Card userCard = CardsManager.singleton.getUserCard();
+        if (userCard == null) {
+            return;
+        }
+
+        Field fullName = userCard.getField(FieldType.fullname);
+        if (!fullName.getValue().isEmpty()) {
+            final TextView userFullNameTv = findViewById(R.id.user_full_name);
+            userFullNameTv.setText(fullName.getValue());
+        }
+
+        String userInfo =
+                " Full name: " + fullName.getValue() + ";\n"
+                        + " Phone number: " + userCard.getField(FieldType.phone).getValue() + ";\n"
+                        + " Facebook login: " + userCard.getField(FieldType.facebook).getValue() + ";\n"
+                        + " Instagram login: " + userCard.getField(FieldType.instagram).getValue() + ";";
+
+        displayQrCode(userInfo);
     }
 }
 
