@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "693045669263",
+    "firebase_url": "https://lookup-b538b.firebaseio.com",
+    "project_id": "lookup-b538b",
+    "storage_bucket": "lookup-b538b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693045669263:android:59c64cf1887c62f5c0effa",
+        "android_client_info": {
+          "package_name": "com.vit.roman.hookup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "693045669263-j4arj96iukialijur6b5s3j4gs62rvmf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlxJ4C6Y6WBg70-hD8dOUvVvp2EJP9mZA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "693045669263-j4arj96iukialijur6b5s3j4gs62rvmf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

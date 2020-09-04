@@ -1,6 +1,4 @@
-
 package com.vit.roman.hookup.activity;
-
 
 import android.Manifest;
 import android.content.Intent;
@@ -32,8 +30,6 @@ import com.vit.roman.hookup.common.Card;
 import com.vit.roman.hookup.common.Field;
 import com.vit.roman.hookup.common.FieldType;
 import com.vit.roman.hookup.common.CardsManager;
-import com.vit.roman.hookup.R;
-
 
 public class ShareActivity extends AppCompatActivity {
     public static final String USER_INFO = "USER_INFO";
