@@ -1,9 +1,7 @@
-package com.example.roman.hookup;
+package com.example.roman.hookup.activity;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -18,9 +16,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.roman.hookup.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -138,16 +136,12 @@ public class ShareActivity extends AppCompatActivity {
     }
 
     private boolean hasCameraPermission() {
-        int res;
-        String permission = Manifest.permission.CAMERA;
-        res = checkCallingOrSelfPermission(permission);
-        return PackageManager.PERMISSION_GRANTED == res;
+        return PackageManager.PERMISSION_GRANTED == checkCallingOrSelfPermission(Manifest.permission.CAMERA);
     }
 
     private void requestCameraPermission() {
-        String[] permissions = new String[]{Manifest.permission.CAMERA};
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(permissions, CAMERA_PERMISSION);
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION);
         }
     }
 

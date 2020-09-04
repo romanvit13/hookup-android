@@ -1,4 +1,4 @@
-package com.example.roman.hookup;
+package com.example.roman.hookup.activity;
 
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.roman.hookup.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

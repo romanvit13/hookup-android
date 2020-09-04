@@ -1,7 +1,9 @@
-package com.example.roman.hookup;
+package com.example.roman.hookup.activity;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.roman.hookup.R;
 
 public class InfoActivity extends AppCompatActivity {
 
