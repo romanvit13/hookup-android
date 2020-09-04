@@ -1,4 +1,4 @@
-package com.example.roman.hookup.activity;
+package com.vit.roman.hookup.activity;
 
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
@@ -15,7 +15,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.roman.hookup.R;
+
+import com.vit.roman.hookup.R;
+
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,6 +33,7 @@ public class ReceiveActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
         saveData();
     }
 

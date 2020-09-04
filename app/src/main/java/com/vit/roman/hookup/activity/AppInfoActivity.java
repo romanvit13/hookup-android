@@ -1,15 +1,19 @@
-package com.example.roman.hookup.activity;
+
+package com.vit.roman.hookup.activity;
+
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import com.vit.roman.hookup.R;
 
-import com.example.roman.hookup.R;
 
-public class InfoActivity extends AppCompatActivity {
+
+
+public class AppInfoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info);
+        setContentView(R.layout.activity_app_info);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.roman.hookup;
+package com.vit.roman.hookup.common;
 
 import androidx.annotation.NonNull;
 
@@ -7,7 +7,8 @@ public enum FieldType {
     email("email"),
     phone("phone"),
     instagram("instagram"),
-    facebook("facebook");
+    facebook("facebook"),
+    empty("empty");
 
     private String value;
 
