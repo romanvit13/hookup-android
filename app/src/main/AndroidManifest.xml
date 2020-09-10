@@ -36,7 +36,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="lookuptest.page.link"
+                    android:host="test-9e99c.web.app"
                     android:scheme="https" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
@@ -46,9 +46,12 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="lookuptest.page.link"
+                    android:host="test-9e99c.web.app"
                     android:scheme="http" />
             </intent-filter>
+            <meta-data
+                android:name="default-url"
+                android:value="https://test-9e99c.web.app/" />
         </activity>
         <activity
             android:name=".activity.UserCardActivity"
