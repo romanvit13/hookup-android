@@ -1,34 +1,42 @@
 {
   "project_info": {
-    "project_number": "90722087162",
-    "firebase_url": "https://vit-hookup.firebaseio.com",
-    "project_id": "vit-hookup",
-    "storage_bucket": "vit-hookup.appspot.com"
+    "project_number": "456526848014",
+    "firebase_url": "https://test-9e99c.firebaseio.com",
+    "project_id": "test-9e99c",
+    "storage_bucket": "test-9e99c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:90722087162:android:fa164a0ef219ba12ca9943",
+        "mobilesdk_app_id": "1:456526848014:android:182588310ab8f59f161c5f",
         "android_client_info": {
           "package_name": "com.vit.roman.hookup"
         }
       },
       "oauth_client": [
         {
-          "client_id": "90722087162-0fqhltfkbdch4235jq1etvp9hj34k08u.apps.googleusercontent.com",
+          "client_id": "456526848014-396cfd6it1frvjjdgdhol4lnb8vcbc5m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vit.roman.hookup",
+            "certificate_hash": "7a850030b5f27791c0768ec7be2f00fed520a074"
+          }
+        },
+        {
+          "client_id": "456526848014-7eu6ds529g2ikaj2i528ptlkj0vk2frv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD5jTyJ9lo5FyywsNYCA32zIP4t7C6x23s"
+          "current_key": "AIzaSyBz_i5Oj4u4bEOdLhKsh2LAdST2zsXmuxM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "90722087162-0fqhltfkbdch4235jq1etvp9hj34k08u.apps.googleusercontent.com",
+              "client_id": "456526848014-7eu6ds529g2ikaj2i528ptlkj0vk2frv.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -31,7 +31,6 @@ import com.vit.roman.hookup.common.Field;
 import com.vit.roman.hookup.common.FieldType;
 import com.vit.roman.hookup.common.CardsManager;
 
-
 public class ShareActivity extends AppCompatActivity {
     public static final String USER_INFO = "USER_INFO";
     private static final int CAMERA_PERMISSION = 13;
@@ -112,16 +111,12 @@ public class ShareActivity extends AppCompatActivity {
     }
 
     private boolean hasCameraPermission() {
-        int res;
-        String permission = Manifest.permission.CAMERA;
-        res = checkCallingOrSelfPermission(permission);
-        return PackageManager.PERMISSION_GRANTED == res;
+        return PackageManager.PERMISSION_GRANTED == checkCallingOrSelfPermission(Manifest.permission.CAMERA);
     }
 
     private void requestCameraPermission() {
-        String[] permissions = new String[]{Manifest.permission.CAMERA};
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(permissions, CAMERA_PERMISSION);
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION);
         }
     }
 

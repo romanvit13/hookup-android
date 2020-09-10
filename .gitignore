@@ -7,5 +7,7 @@
 /build
 /captures
 /gradle/wrapper
+/instant/build
 .externalNativeBuild
 .DS_Store
+

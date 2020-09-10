@@ -1,6 +1,7 @@
 package com.vit.roman.hookup.activity;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.vit.roman.hookup.R;
